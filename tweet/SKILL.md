@@ -22,15 +22,43 @@ Write like a curious practitioner sharing live findings: immediate, specific, an
 3. Draft the tweet following the voice guide in `references/voice-guide.md`
 4. Run through preflight/postflight checklists
 5. Present draft to user for approval
-6. If approved and user wants to post: `bird tweet "<text>"`
+6. If approved:
+   - Post immediately: `bird tweet "<text>"`
+   - Schedule for later: `python scripts/typefully_scheduler.py`
 
 ## Tools
 
-The `bird` CLI provides Twitter integration:
+### bird CLI (immediate posting)
+
 - Search tweets: `bird search "from:kkoppenhaver" -n 10`
 - Read a tweet: `bird read <tweet-id-or-url>`
 - Post a tweet: `bird tweet "<text>"`
 - Post with media: `bird tweet "<text>" --media <path>`
+
+### Typefully Scheduler (scheduling)
+
+Use `scripts/typefully_scheduler.py` to schedule tweets via Typefully API.
+
+**Setup:** Add to `~/.claude/settings.json`:
+```json
+{
+  "env": {
+    "TYPEFULLY_API_KEY": "your-api-key",
+    "TYPEFULLY_SOCIAL_SET_ID": "your-social-set-id"
+  }
+}
+```
+
+Get your API key from Typefully Settings > API & Integrations. To find your social set ID, run: `python scripts/typefully_scheduler.py --list-social-sets`
+
+**Usage:**
+- Schedule a tweet: `python scripts/typefully_scheduler.py`
+- List social sets: `python scripts/typefully_scheduler.py --list-social-sets`
+
+**Scheduling options:**
+- Next free slot (Typefully auto-schedules)
+- Publish immediately
+- Specific date/time (ISO 8601 format)
 
 ## Quick Reference
 

@@ -42,6 +42,12 @@ Write tweets in a distinctive voice mixing playful wonder with pragmatic realism
 - Micro Discovery and Contrast Hack post structures
 - Preflight and postflight quality checklists
 - Direct posting via `bird` CLI
+- Tweet scheduling via Typefully API
+
+**Scripts:**
+- `scripts/typefully_scheduler.py` - Schedule tweets and threads via Typefully
+
+**Requirements:** `bird` CLI for immediate posting. See [Configuration](#configuration) for Typefully setup.
 
 ### youtube-producer
 
@@ -78,35 +84,30 @@ Skills are invoked automatically when Claude Code detects relevant requests, or 
 /youtube-producer
 ```
 
-## Structure
+## Configuration
 
+Some skills require API keys or credentials. Add these to your Claude Code settings file at `~/.claude/settings.json`:
+
+```json
+{
+  "env": {
+    "GEMINI_API_KEY": "your-gemini-api-key",
+    "TYPEFULLY_API_KEY": "your-typefully-api-key",
+    "TYPEFULLY_SOCIAL_SET_ID": "your-social-set-id"
+  }
+}
 ```
-skills/
-├── frontend-design/
-│   └── SKILL.md
-├── nano-banana/
-│   ├── SKILL.md
-│   ├── LICENSE
-│   └── README.md
-├── tweet/
-│   ├── SKILL.md
-│   └── references/
-│       └── voice-guide.md
-└── youtube-producer/
-    ├── SKILL.md
-    ├── references/
-    │   ├── aaron-francis-framework.md
-    │   ├── hook-examples.md
-    │   ├── mark-rober-framework.md
-    │   ├── mrbeast-framework.md
-    │   ├── script-templates.md
-    │   ├── title-formulas.md
-    │   └── veritasium-framework.md
-    └── scripts/
-        ├── hook_analyzer.py
-        ├── shorts_extractor.py
-        └── title_generator.py
-```
+
+### Getting Credentials
+
+**Gemini API Key** (nano-banana):
+- Get from [Google AI Studio](https://aistudio.google.com/apikey)
+
+**Typefully API Key** (tweet scheduling):
+- Get from Typefully Settings > API & Integrations
+
+**Typefully Social Set ID** (tweet scheduling):
+- Run `python ~/.claude/skills/tweet/scripts/typefully_scheduler.py --list-social-sets` to find your ID
 
 ## License
 
