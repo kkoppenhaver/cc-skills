@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 """
-Typefully Tweet Scheduler
+Typefully LinkedIn Scheduler
 
-Schedule tweets to X/Twitter via the Typefully API v2.
+Schedule posts to LinkedIn via the Typefully API v2.
 
 Required environment variables:
   TYPEFULLY_API_KEY      - API key from Typefully Settings > API & Integrations
   TYPEFULLY_SOCIAL_SET_ID - Social set ID (run with --list-social-sets to find it)
 
 Usage:
-  # Schedule a tweet from a file
-  python typefully_scheduler.py --file /path/to/tweet.txt --schedule next-free-slot
+  # Schedule a post from a file
+  python typefully_scheduler.py --file /path/to/post.txt --schedule next-free-slot
 
   # Schedule for a specific time
-  python typefully_scheduler.py --file /path/to/tweet.txt --schedule 2026-01-20T18:00:00Z
+  python typefully_scheduler.py --file /path/to/post.txt --schedule 2026-01-20T18:00:00Z
 
   # Publish immediately
-  python typefully_scheduler.py --file /path/to/tweet.txt --schedule now
+  python typefully_scheduler.py --file /path/to/post.txt --schedule now
 
   # Show currently scheduled posts
   python typefully_scheduler.py --list-scheduled
@@ -96,17 +96,17 @@ class TypefullyScheduler:
         scheduled.sort(key=lambda d: d.get("scheduled_date", ""))
         return scheduled
 
-    def schedule_tweet(
+    def schedule_post(
         self,
         text: str,
         publish_at: str = "next-free-slot",
         share: bool = False
     ) -> ScheduleResult:
         """
-        Schedule a tweet via Typefully.
+        Schedule a LinkedIn post via Typefully.
 
         Args:
-            text: The tweet text
+            text: The post text
             publish_at: When to publish - "now", "next-free-slot", or ISO 8601 datetime
             share: Whether to generate a public share URL
 
@@ -115,54 +115,9 @@ class TypefullyScheduler:
         """
         data = {
             "platforms": {
-                "x": {
+                "linkedin": {
                     "enabled": True,
                     "posts": [{"text": text}]
-                }
-            },
-            "publish_at": publish_at,
-            "share": share
-        }
-
-        try:
-            response = self._make_request(
-                "POST",
-                f"/social-sets/{self.social_set_id}/drafts",
-                data
-            )
-
-            return ScheduleResult(
-                success=True,
-                draft_id=response.get("id"),
-                status=response.get("status"),
-                scheduled_date=response.get("scheduled_date"),
-                share_url=response.get("share_url")
-            )
-        except Exception as e:
-            return ScheduleResult(success=False, error=str(e))
-
-    def schedule_thread(
-        self,
-        posts: List[str],
-        publish_at: str = "next-free-slot",
-        share: bool = False
-    ) -> ScheduleResult:
-        """
-        Schedule a thread via Typefully.
-
-        Args:
-            posts: List of tweet texts (each becomes a post in the thread)
-            publish_at: When to publish - "now", "next-free-slot", or ISO 8601 datetime
-            share: Whether to generate a public share URL
-
-        Returns:
-            ScheduleResult with draft details or error
-        """
-        data = {
-            "platforms": {
-                "x": {
-                    "enabled": True,
-                    "posts": [{"text": text} for text in posts]
                 }
             },
             "publish_at": publish_at,
@@ -192,7 +147,7 @@ def format_result(result: ScheduleResult) -> str:
     lines = []
 
     if result.success:
-        lines.append("Tweet scheduled successfully")
+        lines.append("LinkedIn post scheduled successfully")
         if result.draft_id:
             lines.append(f"   Draft ID: {result.draft_id}")
         if result.status:
@@ -202,7 +157,7 @@ def format_result(result: ScheduleResult) -> str:
         if result.share_url:
             lines.append(f"   Share URL: {result.share_url}")
     else:
-        lines.append("Failed to schedule tweet")
+        lines.append("Failed to schedule LinkedIn post")
         if result.error:
             lines.append(f"   Error: {result.error}")
 
@@ -278,18 +233,18 @@ def get_env_or_exit(name: str) -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Schedule tweets via Typefully API",
+        description="Schedule LinkedIn posts via Typefully API",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  %(prog)s --file tweet.txt --schedule next-free-slot
-  %(prog)s --file tweet.txt --schedule 2026-01-20T18:00:00Z
-  %(prog)s --file tweet.txt --schedule now
+  %(prog)s --file post.txt --schedule next-free-slot
+  %(prog)s --file post.txt --schedule 2026-01-20T18:00:00Z
+  %(prog)s --file post.txt --schedule now
   %(prog)s --list-scheduled
   %(prog)s --list-social-sets
         """
     )
-    parser.add_argument("--file", "-f", help="Path to file containing tweet text")
+    parser.add_argument("--file", "-f", help="Path to file containing post text")
     parser.add_argument("--schedule", "-s", default="next-free-slot",
                         help="When to publish: 'now', 'next-free-slot', or ISO 8601 datetime")
     parser.add_argument("--share", action="store_true", help="Generate a public share URL")
@@ -335,11 +290,11 @@ Examples:
             sys.exit(1)
         return
 
-    # Schedule a tweet - requires --file
+    # Schedule a post - requires --file
     if not args.file:
-        parser.error("--file is required when scheduling a tweet")
+        parser.error("--file is required when scheduling a post")
 
-    # Read tweet content from file
+    # Read post content from file
     try:
         with open(args.file, "r") as f:
             text = f.read().strip()
@@ -351,7 +306,7 @@ Examples:
         sys.exit(1)
 
     if not text:
-        print("Error: Tweet file is empty")
+        print("Error: Post file is empty")
         sys.exit(1)
 
     # Show currently scheduled posts for context
@@ -363,13 +318,13 @@ Examples:
     except Exception:
         pass  # Non-fatal, continue with scheduling
 
-    # Schedule the tweet
-    print(f"Scheduling tweet...")
+    # Schedule the post
+    print(f"Scheduling LinkedIn post...")
     print(f"  Schedule: {args.schedule}")
     print(f"  Content preview: {text[:50]}{'...' if len(text) > 50 else ''}")
     print()
 
-    result = scheduler.schedule_tweet(text, args.schedule, args.share)
+    result = scheduler.schedule_post(text, args.schedule, args.share)
     print(format_result(result))
 
     if not result.success:

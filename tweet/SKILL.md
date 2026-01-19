@@ -19,25 +19,24 @@ Write like a curious practitioner sharing live findings: immediate, specific, an
 
 1. Ask what the user wants to tweet about (if not already clear)
 2. Optionally examine recent tweets for voice calibration: `bird search "from:kkoppenhaver" -n 5`
-3. Draft the tweet following the voice guide in `references/voice-guide.md`
-4. Run through preflight/postflight checklists
-5. Present draft to user for approval
-6. If approved:
-   - Post immediately: `bird tweet "<text>"`
-   - Schedule for later: `python scripts/typefully_scheduler.py`
+3. Check currently scheduled posts: `python3 scripts/typefully_scheduler.py --list-scheduled`
+4. Draft the tweet following the voice guide in `references/voice-guide.md`
+5. Run through preflight/postflight checklists
+6. Present draft to user for approval
+7. If approved, write to temp file and schedule via Typefully
 
 ## Tools
 
-### bird CLI (immediate posting)
+### bird CLI (read-only)
+
+Use for research and voice calibration only. Do not use for posting.
 
 - Search tweets: `bird search "from:kkoppenhaver" -n 10`
 - Read a tweet: `bird read <tweet-id-or-url>`
-- Post a tweet: `bird tweet "<text>"`
-- Post with media: `bird tweet "<text>" --media <path>`
 
 ### Typefully Scheduler (scheduling)
 
-Use `scripts/typefully_scheduler.py` to schedule tweets via Typefully API.
+Use `scripts/typefully_scheduler.py` to schedule tweets via Typefully API. The script is designed for automation (no interactive prompts).
 
 **Setup:** Add to `~/.claude/settings.json`:
 ```json
@@ -49,16 +48,35 @@ Use `scripts/typefully_scheduler.py` to schedule tweets via Typefully API.
 }
 ```
 
-Get your API key from Typefully Settings > API & Integrations. To find your social set ID, run: `python scripts/typefully_scheduler.py --list-social-sets`
+Get your API key from Typefully Settings > API & Integrations. To find your social set ID, run: `python3 scripts/typefully_scheduler.py --list-social-sets`
 
 **Usage:**
-- Schedule a tweet: `python scripts/typefully_scheduler.py`
-- List social sets: `python scripts/typefully_scheduler.py --list-social-sets`
+```bash
+# Check what's already scheduled (do this first to avoid conflicts)
+python3 scripts/typefully_scheduler.py --list-scheduled
 
-**Scheduling options:**
-- Next free slot (Typefully auto-schedules)
-- Publish immediately
-- Specific date/time (ISO 8601 format)
+# Schedule a tweet from a file
+python3 scripts/typefully_scheduler.py --file /tmp/tweet.txt --schedule next-free-slot
+
+# Schedule for a specific time (ISO 8601 format)
+python3 scripts/typefully_scheduler.py --file /tmp/tweet.txt --schedule 2026-01-20T18:00:00Z
+
+# Publish immediately
+python3 scripts/typefully_scheduler.py --file /tmp/tweet.txt --schedule now
+
+# List social sets
+python3 scripts/typefully_scheduler.py --list-social-sets
+
+# View connected platforms
+python3 scripts/typefully_scheduler.py --details
+```
+
+**Scheduling workflow:**
+1. Write tweet content to a temp file (e.g., `/tmp/tweet.txt`)
+2. Run the scheduler with `--file` and `--schedule` flags
+3. The script will show existing scheduled posts before scheduling
+
+**Note:** Posts about the same topic can go out on Twitter and LinkedIn at the same time - that's fine. Just avoid scheduling unrelated posts at conflicting times.
 
 ## Quick Reference
 

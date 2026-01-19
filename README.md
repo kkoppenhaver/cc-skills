@@ -31,6 +31,23 @@ Generate and edit images using the Gemini CLI's nanobanana extension.
 
 **Requirements:** Gemini CLI with nanobanana extension installed, `GEMINI_API_KEY` environment variable set.
 
+### linkedin
+
+Write LinkedIn posts in an upbeat, builder-centric voice mixing practical how-tos with candid humor.
+
+**Triggers:** Drafting LinkedIn content, creating professional posts, or sharing builder-focused insights.
+
+**Features:**
+- Quick Hack/Tip and Process Mini-Guide structures
+- Before/after contrast framing
+- Preflight and postflight quality checklists
+- Post scheduling via Typefully API
+
+**Scripts:**
+- `scripts/typefully_scheduler.py` - Schedule LinkedIn posts via Typefully
+
+**Requirements:** See [Configuration](#configuration) for Typefully setup.
+
 ### tweet
 
 Write tweets in a distinctive voice mixing playful wonder with pragmatic realism.
@@ -41,13 +58,12 @@ Write tweets in a distinctive voice mixing playful wonder with pragmatic realism
 - Voice calibration using existing tweets
 - Micro Discovery and Contrast Hack post structures
 - Preflight and postflight quality checklists
-- Direct posting via `bird` CLI
 - Tweet scheduling via Typefully API
 
 **Scripts:**
-- `scripts/typefully_scheduler.py` - Schedule tweets and threads via Typefully
+- `scripts/typefully_scheduler.py` - Schedule tweets via Typefully
 
-**Requirements:** `bird` CLI for immediate posting. See [Configuration](#configuration) for Typefully setup.
+**Requirements:** `bird` CLI for research/voice calibration. See [Configuration](#configuration) for Typefully setup.
 
 ### youtube-producer
 
@@ -79,6 +95,7 @@ Skills are invoked automatically when Claude Code detects relevant requests, or 
 
 ```
 /frontend-design
+/linkedin
 /nano-banana
 /tweet
 /youtube-producer
@@ -103,11 +120,12 @@ Some skills require API keys or credentials. Add these to your Claude Code setti
 **Gemini API Key** (nano-banana):
 - Get from [Google AI Studio](https://aistudio.google.com/apikey)
 
-**Typefully API Key** (tweet scheduling):
+**Typefully API Key** (tweet/LinkedIn scheduling):
 - Get from Typefully Settings > API & Integrations
 
-**Typefully Social Set ID** (tweet scheduling):
+**Typefully Social Set ID** (tweet/LinkedIn scheduling):
 - Run `python ~/.claude/skills/tweet/scripts/typefully_scheduler.py --list-social-sets` to find your ID
+- Run `python ~/.claude/skills/tweet/scripts/typefully_scheduler.py --details` to see connected platforms
 
 ## License
 
