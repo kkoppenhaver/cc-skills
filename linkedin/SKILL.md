@@ -15,6 +15,10 @@ Write LinkedIn posts in Keanan's distinctive voice: upbeat, builder-centric, mix
 
 Write like a hands-on practitioner sharing a fresh discovery: conversational, concise, and generous with specifics. Keep the focus on what you did, how you did it, and how the reader can do it.
 
+## Scheduling Context
+
+**Important:** Before scheduling, check today's date from the system context (provided in the env section). Use this to correctly map day names to calendar dates (e.g., if today is Tuesday Jan 20, then "Wednesday" = Jan 21, not Jan 22).
+
 ## Workflow
 
 1. Ask what the user wants to post about (if not already clear)

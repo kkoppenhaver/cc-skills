@@ -15,6 +15,10 @@ Write tweets in Keanan's distinctive voice: casual, tool-savvy, mixing playful w
 
 Write like a curious practitioner sharing live findings: immediate, specific, and grounded in hands-on experience.
 
+## Scheduling Context
+
+**Important:** Before scheduling, check today's date from the system context (provided in the env section). Use this to correctly map day names to calendar dates (e.g., if today is Tuesday Jan 20, then "Wednesday" = Jan 21, not Jan 22).
+
 ## Workflow
 
 1. Ask what the user wants to tweet about (if not already clear)
