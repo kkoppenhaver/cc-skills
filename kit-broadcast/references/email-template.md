@@ -13,7 +13,7 @@
 
 <p>You signed up to get updates when I posted a new article on <a href="https://claudecodeformarketers.com">claudecodeformarketers.com</a> and I've done just that today!</p>
 
-<p>Today's post is about {one-sentence description of what the post covers}.</p>
+<p>Today's post is about {specific one-sentence description - mention the actual topic/technique, not generic phrasing}.</p>
 
 <p>We cover:</p>
 
@@ -32,6 +32,16 @@
 
 <p>Keanan</p>
 ```
+
+## One-sentence description
+
+Be specific about what the post actually covers. Avoid vague, generic descriptions.
+
+**Bad (too vague):** "Today's post is about small things that make a big difference once you know about them."
+
+**Good (specific):** "Today's post is about some tricks of Claude Code that can make a big difference once you start using them in your workflow."
+
+The reader should know what they'll learn from this sentence alone.
 
 ## Key points extraction
 
