@@ -96,6 +96,31 @@ New workflow: [simple solution with named tool]
 Saved [time/effort]. Works for [use case] ⚡
 ```
 
+## Keanan's Preferences
+
+Patterns learned from direct feedback:
+
+### Parallel Structure
+Combine repeated structures into grammatically complete sentences rather than fragmenting them.
+- **Avoid:** "It can't see your browser. Can't check your Notion. Can't interact with anything outside your files."
+- **Prefer:** "It can't see your browser, can't check your Notion, and can't interact with anything outside your files."
+
+### Outcome Over Tool Name
+Explain what a tool *does* rather than just naming it. Lead with the benefit.
+- **Avoid:** "But Playwright is literally one line."
+- **Prefer:** "But giving CC its own browser is literally one line."
+
+### Trust the Reader
+Don't over-explain concepts inline. Link to the full post for details and keep the tweet focused on the hook and payoff.
+
+### Acceptable Shorthand
+"CC" is acceptable shorthand for "Claude Code" when space is tight.
+
+### Specificity on the Payoff
+Add concrete details to the exciting part. Make the outcome vivid.
+- **Avoid:** "navigate a browser"
+- **Prefer:** "navigate a real web browser"
+
 ## Voice Anti-Patterns
 
 Things to avoid:

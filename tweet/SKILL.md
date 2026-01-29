@@ -89,7 +89,7 @@ python3 scripts/typefully_scheduler.py --details
 **Micro Discovery Post:**
 1. Hook (spark) - one-line setup with ellipses or short exclamation
 2. Context (1-2 lines) - minimal specifics: tools, files, goal
-3. Reveal/Result - concise verdict with one emoji
+3. Reveal/Result - concise verdict, optionally with emoji
 4. Nudge - actionable suggestion in second person
 5. Caveat - quick realism note
 
@@ -115,7 +115,7 @@ python3 scripts/typefully_scheduler.py --details
 - [ ] At least one concrete tool/file/outcome
 - [ ] Contrast or reveal beat present
 - [ ] One candid caveat or edge case
-- [ ] Single emoji punctuating key moment
+- [ ] Emoji used sparingly if at all (0-1, only if it adds to the moment)
 - [ ] Sentences mostly 5-15 words with a 3-5 word punch
 - [ ] Direct, testable CTA in second person (if applicable)
 - [ ] Light warmth without undercutting the result

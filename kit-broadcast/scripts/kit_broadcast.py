@@ -22,6 +22,7 @@ from urllib.error import HTTPError
 
 
 CC4M_TAG_ID = 14154457  # "CC4M" tag for Claude Code for Marketers subscribers
+WELCOME_SEQUENCE_ID = 1706551  # "Welcome to CC4M" onboarding sequence (exclude from broadcasts)
 
 
 def create_broadcast(

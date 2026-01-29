@@ -45,7 +45,11 @@ User is in US Central time. When they say "10am tomorrow", convert to ISO8601 wi
 
 ## Subscriber targeting
 
-Broadcasts are automatically filtered to subscribers with the "CC4M" tag (ID: 14154457). This is hardcoded in the script.
+Broadcasts are automatically filtered to:
+- **Include:** Subscribers with the "CC4M" tag (ID: 14154457)
+- **Exclude:** Subscribers currently in the "Welcome to CC4M" onboarding sequence (ID: 1706551)
+
+This ensures new subscribers complete their onboarding emails before receiving broadcast announcements. Both filters are hardcoded in the script.
 
 ## After scheduling
 

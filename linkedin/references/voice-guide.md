@@ -132,3 +132,51 @@
 - **Safety caveat:** When suggesting code/tooling for production, include a brief "not production-ready yet" note.
 - **Community ask:** When soliciting votes/feedback, lead with value or gratitude before the ask.
 - **Personal anecdote:** Use for rapport; keep it short and tie back to the main thread if possible.
+
+## Keanan's Preferences
+
+Patterns learned from direct feedback:
+
+### Parallel Structure
+Combine repeated structures into grammatically complete sentences rather than fragmenting them.
+- **Avoid:** "It can't see your browser. Can't check your Notion. Can't interact with anything outside your files."
+- **Prefer:** "It can't see your browser, can't check your Notion, and can't interact with anything outside your files."
+
+### Outcome Over Tool Name
+Explain what a tool *does* rather than just naming it. Lead with the benefit.
+- **Avoid:** "Playwright is literally one line to install"
+- **Prefer:** "gives Claude its own browser - literally one line to install"
+
+### Trust the Reader
+Don't over-explain concepts inline. Link to the full post for details. Cut explanatory sections that re-teach what the linked article covers.
+
+### Acceptable Shorthand
+"CC" is acceptable shorthand for "Claude Code" in casual contexts.
+
+### Specificity on the Payoff
+Add concrete details to the exciting part. Make the outcome vivid.
+- **Avoid:** "navigate a browser"
+- **Prefer:** "navigate a real web browser"
+
+### Link Phrasing
+Use conversational phrasing for links.
+- **Avoid:** "Full post:"
+- **Prefer:** "Full post is here:"
+
+### Ground AI Techniques in Human Analogies
+Make AI workflows relatable by comparing them to human collaboration patterns.
+- **Avoid:** "Claude Code interviews you to surface missing context."
+- **Prefer:** "That's not how I'd collaborate with a coworker either. I'd give them as much information as I had and ask 'does that make sense?' That's how I work with CC now too."
+
+### Parenthetical Context for Use Cases
+Add specificity without bloating the main sentence by using parentheticals for different scenarios.
+- **Example:** "It asks about goals, constraints, audience (if it's a writing project), and edge cases (if it's a coding project)."
+
+### Playful Payoff Lines
+Use warm, energetic language for the "result" moment instead of clinical descriptions.
+- **Avoid:** "First drafts come out dramatically better."
+- **Prefer:** "A few questions later, we're aligned and all the fun kicks off."
+
+### CC4M Shorthand
+"CC4M" is acceptable shorthand for "Claude Code for Marketers" in CTAs.
+- **Example:** "For more info on how I use this technique, check out the latest CC4M post:"
