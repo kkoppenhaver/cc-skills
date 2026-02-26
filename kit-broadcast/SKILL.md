@@ -45,11 +45,13 @@ User is in US Central time. When they say "10am tomorrow", convert to ISO8601 wi
 
 ## Subscriber targeting
 
-Broadcasts are automatically filtered to:
-- **Include:** Subscribers with the "CC4M" tag (ID: 14154457)
-- **Exclude:** Subscribers currently in the "Welcome to CC4M" onboarding sequence (ID: 1706551)
+Broadcasts use the "CC4M broadcast audience" **segment** (ID: 544062), which is configured in the Kit UI to:
+- **Include:** Subscribers with the "CC4M" tag
+- **Exclude:** Subscribers currently in the "Welcome to CC4M" onboarding sequence
 
-This ensures new subscribers complete their onboarding emails before receiving broadcast announcements. Both filters are hardcoded in the script.
+This ensures new subscribers complete their onboarding emails before receiving broadcast announcements. The segment ID is hardcoded in the script.
+
+**Why a segment?** The Kit API v4 only supports `tag` and `segment` filter types, and only one filter group type (`all`, `any`, or `none`) per API call. Sequence exclusion requires a pre-built segment that combines both filters in the Kit UI.
 
 ## After scheduling
 

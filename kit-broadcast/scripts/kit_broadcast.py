@@ -21,8 +21,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 
 
-CC4M_TAG_ID = 14154457  # "CC4M" tag for Claude Code for Marketers subscribers
-WELCOME_SEQUENCE_ID = 1706551  # "Welcome to CC4M" onboarding sequence (exclude from broadcasts)
+CC4M_BROADCAST_SEGMENT_ID = 544062  # "CC4M broadcast audience" segment (CC4M tag, excludes onboarding sequence)
 
 
 def create_broadcast(
@@ -57,9 +56,9 @@ def create_broadcast(
         "subject": subject,
         "content": content,
         "public": False,  # Don't publish to web
-        "subscriber_filter": [{
-            "all": [{"type": "tag", "ids": [CC4M_TAG_ID]}]
-        }]
+        "subscriber_filter": [
+            {"all": [{"type": "segment", "ids": [CC4M_BROADCAST_SEGMENT_ID]}], "any": None, "none": None}
+        ]
     }
 
     if send_at:
