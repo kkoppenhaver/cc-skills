@@ -121,6 +121,31 @@ Add concrete details to the exciting part. Make the outcome vivid.
 - **Avoid:** "navigate a browser"
 - **Prefer:** "navigate a real web browser"
 
+### Flow Over Fragments
+Don't break related ideas into separate staccato sentences. Connect them into one flowing thought with "and" or commas. This applies to tweets just as much as blog posts.
+- **Avoid:** "I tried it. Got garbled code. Text was unreadable."
+- **Prefer:** "I tried it and I got garbled code, made-up descriptions, and text I couldn't even read."
+
+### No Announcement Phrases
+Don't telegraph reveals with phrases like "The kicker:" or "Here's the thing:" — just make the point directly. Fold the payoff into the natural flow of the previous sentence instead of giving it its own fanfare.
+- **Avoid:** "The kicker: when I needed to fix something, I just fixed it."
+- **Prefer:** "...and when I needed to fix something, it just...fixed it."
+
+### Extend Conclusions With Next Steps
+Don't stop at the conclusion. Add a practical follow-through so the reader knows what to actually do.
+- **Avoid:** "code wins."
+- **Prefer:** "code wins, then just export as a PDF if you need to print."
+
+### Don't Rush to Judgment
+Let observations land naturally instead of rushing to a verdict. Softer pacing feels more honest.
+- **Avoid:** "the cracks showed fast"
+- **Prefer:** "the cracks started to show"
+
+### Personal Moments Over Abstract Transitions
+Ground transitions in personal experience ("I saw," "I noticed") rather than abstract descriptions. Use accessible language over technical shorthand.
+- **Avoid:** "The real difference showed up during iteration."
+- **Prefer:** "I saw the real difference when I needed to make changes."
+
 ## Voice Anti-Patterns
 
 Things to avoid:

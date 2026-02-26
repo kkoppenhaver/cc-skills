@@ -180,3 +180,13 @@ Use warm, energetic language for the "result" moment instead of clinical descrip
 ### CC4M Shorthand
 "CC4M" is acceptable shorthand for "Claude Code for Marketers" in CTAs.
 - **Example:** "For more info on how I use this technique, check out the latest CC4M post:"
+
+### Don't Rush to Judgment
+Let observations land naturally instead of rushing to a verdict. Softer pacing feels more honest.
+- **Avoid:** "the cracks showed fast"
+- **Prefer:** "the cracks started to show"
+
+### Personal Moments Over Abstract Transitions
+Ground transitions in a personal experience ("I saw," "I noticed") rather than abstract descriptions of what happened. Use accessible language over technical shorthand.
+- **Avoid:** "The real difference showed up during iteration."
+- **Prefer:** "I saw the real difference when I needed to make changes."
