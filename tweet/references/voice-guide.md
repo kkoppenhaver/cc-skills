@@ -146,6 +146,14 @@ Ground transitions in personal experience ("I saw," "I noticed") rather than abs
 - **Avoid:** "The real difference showed up during iteration."
 - **Prefer:** "I saw the real difference when I needed to make changes."
 
+### Brevity Over Narrative (Blog Promo Tweets)
+When promoting a blog post, keep it short: 3 short paragraphs max. State the problem and solution simply, add one brief caveat, and link. Don't walk through the whole workflow or spell out every step of the "old way" — just summarize the friction in a few words. The blog post has the details; the tweet's job is to make someone want to click.
+- **Avoid:** "My workflow used to be: open a Google Doc, select all, copy, paste into a local file, edit with Claude Code, copy the result back, hope the formatting survived. The GWS CLI cuts all of that. Pull a Doc down, edit it locally, push it back..."
+- **Prefer:** "My Claude Code + Google Docs used to involve a ton of copy/pasting. Now with the Google Workspace CLI, I don't have to leave Claude Code. Still a little finicky with formatting, but it's much more efficient."
+
+### Just Share the Thing
+Not every tweet needs a reveal structure, contrast pattern, or storytelling arc. Sometimes the best tweet is just: here's what I was doing, here's what changed, here's the link. Casual and direct beats clever and theatrical.
+
 ## Voice Anti-Patterns
 
 Things to avoid:

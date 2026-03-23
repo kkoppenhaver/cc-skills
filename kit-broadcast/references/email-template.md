@@ -9,9 +9,9 @@
 ## Email structure
 
 ```html
-<p>Hi there!</p>
+<p>Hi there,</p>
 
-<p>You signed up to get updates when I posted a new article on <a href="https://claudecodeformarketers.com">claudecodeformarketers.com</a> and I've done just that today!</p>
+<p>You signed up to get updates when I posted a new article on <a href="https://claudecodeformarketers.com">claudecodeformarketers.com</a> and I've done just that today.</p>
 
 <p>Today's post is about {specific one-sentence description - mention the actual topic/technique, not generic phrasing}.</p>
 

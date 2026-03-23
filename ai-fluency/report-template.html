@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Fluency Report — Anthropic 4D Framework</title>
+<style>
+  /* ========== RESET & BASE ========== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-primary: #0d1117;
+    --bg-card: #161b22;
+    --bg-card-alt: #1c2230;
+    --bg-hover: #21262d;
+    --border: #30363d;
+    --border-light: #3a424d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+
+    /* 4D Framework Colors */
+    --color-description: #3fb950;
+    --color-delegation: #a371f7;
+    --color-discernment: #f778ba;
+    --color-diligence: #58a6ff;
+
+    /* Status Colors */
+    --color-green: #3fb950;
+    --color-green-bg: rgba(63, 185, 80, 0.12);
+    --color-amber: #d29922;
+    --color-amber-bg: rgba(210, 153, 34, 0.12);
+    --color-red: #f85149;
+    --color-red-bg: rgba(248, 81, 73, 0.12);
+
+    /* Score Heat Colors */
+    --heat-1: #da3633;
+    --heat-2: #e05a50;
+    --heat-3: #e8796e;
+    --heat-4: #d29922;
+    --heat-5: #c9a227;
+    --heat-6: #b5a63a;
+    --heat-7: #3fb950;
+    --heat-8: #2ea043;
+    --heat-9: #238636;
+    --heat-10: #1a7f37;
+
+    --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+
+    --max-width: 960px;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-stack);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  .report-header {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .header-brand { display: flex; align-items: center; gap: 12px; }
+
+  .header-logo {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--color-description), var(--color-delegation), var(--color-discernment), var(--color-diligence));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; color: #fff;
+  }
+
+  .header-title { font-size: 14px; font-weight: 600; letter-spacing: 0.02em; }
+  .header-subtitle { font-size: 12px; color: var(--text-secondary); }
+  .header-meta { font-size: 12px; color: var(--text-muted); text-align: right; }
+
+  .main-container { max-width: var(--max-width); margin: 0 auto; padding: 32px 24px 64px; }
+
+  .hero { text-align: center; padding: 48px 0 40px; }
+
+  .hero h1 {
+    font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .hero-sub { font-size: 15px; color: var(--text-secondary); margin-bottom: 40px; }
+  .hero-sub span { color: var(--text-primary); font-weight: 500; }
+
+  .gauge-container { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: 8px; }
+  .gauge { position: relative; width: 200px; height: 200px; }
+  .gauge svg { width: 200px; height: 200px; transform: rotate(-90deg); }
+  .gauge-bg { fill: none; stroke: var(--border); stroke-width: 10; }
+  .gauge-fill { fill: none; stroke-width: 10; stroke-linecap: round; stroke: url(#gaugeGradient); stroke-dasharray: 502.65; stroke-dashoffset: 502.65; transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+  .gauge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .gauge-score { font-size: 48px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .gauge-max { font-size: 16px; color: var(--text-muted); font-weight: 400; }
+  .gauge-label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+  .level-badge {
+    display: inline-flex; align-items: center; gap: 6px; padding: 8px 20px;
+    background: var(--color-amber-bg); border: 1px solid rgba(210, 153, 34, 0.3);
+    border-radius: 24px; font-size: 14px; font-weight: 600; color: var(--color-amber);
+  }
+  .level-badge .arrow { font-size: 12px; opacity: 0.7; }
+
+  .section { margin-bottom: 40px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section-number { width: 28px; height: 28px; border-radius: 8px; background: var(--bg-card-alt); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--text-secondary); flex-shrink: 0; }
+  .section-title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
+  .card-title { font-size: 15px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+  .dim-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex-shrink: 0; }
+  .dim-dot.description { background: var(--color-description); }
+  .dim-dot.delegation { background: var(--color-delegation); }
+  .dim-dot.discernment { background: var(--color-discernment); }
+  .dim-dot.diligence { background: var(--color-diligence); }
+
+  .behavior-item { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(48, 54, 61, 0.5); }
+  .behavior-item:last-child { border-bottom: none; }
+  .behavior-freq { font-size: 14px; font-weight: 600; font-family: var(--font-mono); text-align: center; }
+  .behavior-text { font-size: 14px; color: var(--text-secondary); }
+  .behavior-text .pct { color: var(--text-muted); font-size: 12px; }
+
+  .status-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 12px; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.04em; }
+  .status-badge.above { background: var(--color-green-bg); color: var(--color-green); }
+  .status-badge.well-above { background: var(--color-green-bg); color: var(--color-green); border: 1px solid rgba(63, 185, 80, 0.3); }
+  .status-badge.at { background: var(--color-amber-bg); color: var(--color-amber); }
+  .status-badge.below { background: var(--color-red-bg); color: var(--color-red); }
+  .status-badge.violation { background: var(--color-red-bg); color: var(--color-red); border: 1px solid rgba(248, 81, 73, 0.3); }
+
+  .dim-bar-row { display: grid; grid-template-columns: 150px 1fr 60px 140px; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(48, 54, 61, 0.4); }
+  .dim-bar-row:last-child { border-bottom: none; }
+  .dim-bar-label { font-size: 14px; font-weight: 500; }
+  .dim-bar-track { height: 24px; background: var(--bg-primary); border-radius: 6px; overflow: hidden; position: relative; }
+  .dim-bar-fill { height: 100%; border-radius: 6px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+  .dim-bar-fill.low { background: linear-gradient(90deg, var(--heat-1), var(--heat-3)); }
+  .dim-bar-fill.mid { background: linear-gradient(90deg, var(--heat-4), var(--heat-6)); }
+  .dim-bar-fill.high { background: linear-gradient(90deg, var(--heat-7), var(--heat-9)); }
+  .dim-bar-score { font-size: 16px; font-weight: 700; font-family: var(--font-mono); text-align: right; }
+  .dim-bar-assess { font-size: 12px; color: var(--text-secondary); line-height: 1.3; }
+
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -24px; padding: 0 24px; }
+  .heatmap-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; min-width: 700px; }
+  .heatmap-table th { background: var(--bg-card-alt); color: var(--text-secondary); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 8px; text-align: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1; }
+  .heatmap-table th:first-child, .heatmap-table th:nth-child(2) { text-align: left; }
+  .heatmap-table td { padding: 8px; text-align: center; border-bottom: 1px solid rgba(48, 54, 61, 0.3); font-family: var(--font-mono); font-weight: 500; }
+  .heatmap-table td:first-child { color: var(--text-muted); font-size: 12px; width: 28px; }
+  .heatmap-table td:nth-child(2) { text-align: left; font-family: var(--font-stack); font-weight: 500; color: var(--text-primary); max-width: 200px; }
+  .heatmap-table td:nth-child(3) { color: var(--text-muted); font-size: 12px; }
+  .heatmap-table tr:last-child td { border-bottom: none; }
+  .heat-cell { border-radius: 4px; padding: 4px 0; min-width: 32px; display: inline-block; }
+  .heat-1, .heat-2, .heat-3 { background: rgba(248, 81, 73, 0.2); color: var(--color-red); }
+  .heat-4, .heat-5, .heat-6 { background: rgba(210, 153, 34, 0.2); color: var(--color-amber); }
+  .heat-7, .heat-8, .heat-9, .heat-10 { background: rgba(63, 185, 80, 0.2); color: var(--color-green); }
+  .heat-overall { font-weight: 700; font-size: 14px; }
+
+  .comparison-row { display: grid; grid-template-columns: 1fr 200px 100px; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(48, 54, 61, 0.4); font-size: 13px; }
+  .comparison-row:last-child { border-bottom: none; }
+  .comparison-label { font-size: 13px; color: var(--text-secondary); }
+  .comparison-bars { position: relative; height: 28px; }
+  .comparison-bar { position: absolute; height: 12px; border-radius: 4px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); min-width: 2px; }
+  .comparison-bar.population { top: 0; background: var(--text-muted); opacity: 0.5; }
+  .comparison-bar.user { top: 16px; background: var(--color-diligence); }
+  .comparison-delta { font-size: 13px; font-weight: 600; font-family: var(--font-mono); text-align: right; }
+  .delta-pos { color: var(--color-green); }
+  .delta-neg { color: var(--color-red); }
+  .delta-neutral { color: var(--color-amber); }
+
+  .comparison-legend { display: flex; gap: 20px; margin-bottom: 16px; font-size: 12px; color: var(--text-secondary); }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 16px; height: 8px; border-radius: 3px; }
+  .legend-swatch.pop { background: var(--text-muted); opacity: 0.5; }
+  .legend-swatch.user { background: var(--color-diligence); }
+
+  .insight-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; border-left: 3px solid; }
+  .insight-card.strength { border-left-color: var(--color-green); }
+  .insight-card.edge { border-left-color: var(--color-amber); }
+  .insight-card.paradox { border-left-color: var(--color-discernment); }
+  .insight-number { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .insight-number.strength { color: var(--color-green); }
+  .insight-number.edge { color: var(--color-amber); }
+  .insight-number.paradox { color: var(--color-discernment); }
+  .insight-title { font-size: 17px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+  .insight-body { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+  .insight-body p { margin-bottom: 12px; }
+  .insight-body p:last-child { margin-bottom: 0; }
+
+  blockquote { border-left: 3px solid var(--color-delegation); padding: 10px 16px; margin: 12px 0; background: rgba(163, 113, 247, 0.06); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-style: italic; font-size: 13px; color: var(--text-primary); line-height: 1.6; }
+  blockquote .conv-ref { color: var(--text-muted); font-style: normal; font-size: 11px; }
+
+  .suggestion-box { background: rgba(88, 166, 255, 0.08); border: 1px solid rgba(88, 166, 255, 0.2); border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 12px; font-size: 13px; color: var(--color-diligence); line-height: 1.6; }
+  .suggestion-box strong { color: var(--text-primary); font-weight: 600; }
+
+  .paradox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .paradox-case { padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+  .paradox-case.bad { background: rgba(248, 81, 73, 0.06); border-color: rgba(248, 81, 73, 0.2); }
+  .paradox-case.good { background: rgba(63, 185, 80, 0.06); border-color: rgba(63, 185, 80, 0.2); }
+  .paradox-case-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .paradox-case.bad .paradox-case-title { color: var(--color-red); }
+  .paradox-case.good .paradox-case-title { color: var(--color-green); }
+  .paradox-case p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .paradox-scores { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .paradox-score { font-size: 11px; font-family: var(--font-mono); padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+  .paradox-score.bad { background: rgba(248, 81, 73, 0.15); color: var(--color-red); }
+  .paradox-score.good { background: rgba(63, 185, 80, 0.15); color: var(--color-green); }
+
+  .report-footer { max-width: var(--max-width); margin: 0 auto; padding: 32px 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+  .footer-title { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
+
+  .nav-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 32px; justify-content: center; }
+  .nav-pill { font-size: 12px; padding: 6px 14px; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer; transition: all 0.2s; text-decoration: none; }
+  .nav-pill:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border-light); }
+
+  .dim-label { font-weight: 600; font-size: 12px; letter-spacing: 0.02em; }
+  .dim-label.description { color: var(--color-description); }
+  .dim-label.delegation { color: var(--color-delegation); }
+  .dim-label.discernment { color: var(--color-discernment); }
+  .dim-label.diligence { color: var(--color-diligence); }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .gauge { width: 160px; height: 160px; }
+    .gauge svg { width: 160px; height: 160px; }
+    .gauge-score { font-size: 40px; }
+    .dim-bar-row { grid-template-columns: 110px 1fr 50px; }
+    .dim-bar-assess { display: none; }
+    .comparison-row { grid-template-columns: 1fr 140px 80px; }
+    .paradox-grid { grid-template-columns: 1fr; }
+    .card { padding: 16px; }
+    .main-container { padding: 24px 16px 48px; }
+    .header-meta { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .dim-bar-row { grid-template-columns: 1fr; gap: 4px; }
+    .dim-bar-track { height: 20px; }
+    .behavior-item { grid-template-columns: 40px 1fr; }
+    .status-badge { display: none; }
+    .nav-pills { display: none; }
+  }
+
+  .animate-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .animate-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="report-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">4D</div>
+      <div>
+        <div class="header-title">AI Fluency Report</div>
+        <div class="header-subtitle">Anthropic 4D Framework</div>
+      </div>
+    </div>
+    <div class="header-meta">{{HEADER_META}}</div>
+  </div>
+</header>
+
+<div class="main-container">
+
+  <!-- HERO -->
+  <section class="hero animate-in">
+    <h1>AI Fluency Assessment</h1>
+    <p class="hero-sub">{{HERO_SUBTITLE}}</p>
+
+    <div class="gauge-container">
+      <div class="gauge">
+        <svg viewBox="0 0 200 200">
+          <defs>
+            <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color: var(--color-amber);" />
+              <stop offset="100%" style="stop-color: var(--color-green);" />
+            </linearGradient>
+          </defs>
+          <circle class="gauge-bg" cx="100" cy="100" r="80" />
+          <circle class="gauge-fill" cx="100" cy="100" r="80" id="gaugeArc" />
+        </svg>
+        <div class="gauge-center">
+          <div class="gauge-score">{{OVERALL_SCORE}}<span class="gauge-max">/10</span></div>
+          <div class="gauge-label">Overall Score</div>
+        </div>
+      </div>
+      <div class="level-badge">{{LEVEL_BADGE}}</div>
+    </div>
+  </section>
+
+  <!-- NAV -->
+  <nav class="nav-pills">
+    <a href="#behaviors" class="nav-pill">Behaviors</a>
+    <a href="#conversations" class="nav-pill">Conversations</a>
+    <a href="#dimensions" class="nav-pill">Dimensions</a>
+    <a href="#strengths" class="nav-pill">Strengths</a>
+    <a href="#edges" class="nav-pill">Growth Edges</a>
+    <a href="#paradox" class="nav-pill">Artifact Paradox</a>
+    <a href="#comparison" class="nav-pill">vs. Population</a>
+  </nav>
+
+  <!-- SECTION 1: BEHAVIOR DETECTION -->
+  <section class="section animate-in" id="behaviors">
+    <div class="section-header">
+      <div class="section-number">1</div>
+      <h2 class="section-title">Behavior Detection</h2>
+    </div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">Observed in <em>N</em> of {{TOTAL_CONVERSATIONS}} conversations. Population baselines from Anthropic's study of 9,830 Claude.ai conversations.</p>
+
+    {{BEHAVIOR_CARDS}}
+  </section>
+
+  <!-- SECTION 2: PER-CONVERSATION SCORES -->
+  <section class="section animate-in" id="conversations">
+    <div class="section-header">
+      <div class="section-number">2</div>
+      <h2 class="section-title">Per-Conversation Scores</h2>
+    </div>
+    <div class="card" style="padding: 16px;">
+      <div class="table-scroll">
+        <table class="heatmap-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Topic</th>
+              <th>Msgs</th>
+              <th>Spec</th>
+              <th>Iter</th>
+              <th>Disc</th>
+              <th>Deleg</th>
+              <th>Decomp</th>
+              <th>Tools</th>
+              <th>Dilig</th>
+              <th>Overall</th>
+            </tr>
+          </thead>
+          <tbody id="conversationTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: DIMENSION AVERAGES -->
+  <section class="section animate-in" id="dimensions">
+    <div class="section-header">
+      <div class="section-number">3</div>
+      <h2 class="section-title">Dimension Averages</h2>
+    </div>
+    <div class="card">
+      <div id="dimensionBars"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: STRENGTHS -->
+  <section class="section animate-in" id="strengths">
+    <div class="section-header">
+      <div class="section-number">4</div>
+      <h2 class="section-title">Signature Strengths</h2>
+    </div>
+    {{STRENGTHS_HTML}}
+  </section>
+
+  <!-- SECTION 5: GROWTH EDGES -->
+  <section class="section animate-in" id="edges">
+    <div class="section-header">
+      <div class="section-number">5</div>
+      <h2 class="section-title">Growth Edges</h2>
+    </div>
+    {{EDGES_HTML}}
+  </section>
+
+  <!-- SECTION 6: ARTIFACT PARADOX -->
+  <section class="section animate-in" id="paradox">
+    <div class="section-header">
+      <div class="section-number">6</div>
+      <h2 class="section-title">The Artifact Paradox Check</h2>
+    </div>
+    {{PARADOX_HTML}}
+  </section>
+
+  <!-- SECTION 7: COMPARISON -->
+  <section class="section animate-in" id="comparison">
+    <div class="section-header">
+      <div class="section-number">7</div>
+      <h2 class="section-title">Comparison to Population</h2>
+    </div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">Anthropic's research across 9,830 Claude.ai conversations.</p>
+
+    <div class="card">
+      <div class="comparison-legend">
+        <div class="legend-item"><div class="legend-swatch pop"></div> Population rate</div>
+        <div class="legend-item"><div class="legend-swatch user"></div> User rate</div>
+      </div>
+      <div id="comparisonBars"></div>
+    </div>
+
+    <div class="card" style="margin-top: 16px;">
+      <div class="card-title" style="margin-bottom: 12px;">Profile Summary</div>
+      <div class="insight-body">
+        {{PROFILE_SUMMARY_HTML}}
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="report-footer">
+  <div class="footer-title">Methodology</div>
+  <p>{{METHODOLOGY_TEXT}}</p>
+  <p style="margin-top: 12px; opacity: 0.6;">{{FOOTER_DATE_LINE}}</p>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // ========== DATA (filled in by Claude) ==========
+  var conversations = {{CONVERSATIONS_JS_ARRAY}};
+  var dimensions = {{DIMENSIONS_JS_ARRAY}};
+  var comparisons = {{COMPARISONS_JS_ARRAY}};
+  var overallScore = {{OVERALL_SCORE_NUM}};
+
+  // ========== HEATMAP TABLE ==========
+  function heatClass(val) {
+    if (val <= 3) return 'heat-1';
+    if (val <= 6) return 'heat-4';
+    return 'heat-7';
+  }
+
+  function heatCell(val) {
+    return '<span class="heat-cell ' + heatClass(val) + '">' + val + '</span>';
+  }
+
+  var tbody = document.getElementById('conversationTable');
+  conversations.forEach(function(c) {
+    var scoreFields = [c.spec, c.iter, c.disc, c.deleg, c.decomp, c.tools, c.dilig];
+    var cells = scoreFields.map(function(v) { return '<td>' + heatCell(v) + '</td>'; }).join('');
+    tbody.innerHTML += '<tr>' +
+      '<td>' + c.num + '</td>' +
+      '<td>' + c.topic + '</td>' +
+      '<td>' + c.msgs + '</td>' +
+      cells +
+      '<td><span class="heat-cell heat-overall ' + heatClass(Math.round(c.overall)) + '">' + c.overall.toFixed(1) + '</span></td>' +
+      '</tr>';
+  });
+
+  // ========== DIMENSION BARS ==========
+  var dimContainer = document.getElementById('dimensionBars');
+  dimensions.forEach(function(d) {
+    var pct = (d.score / 10) * 100;
+    var level = d.score < 4 ? 'low' : d.score < 7 ? 'mid' : 'high';
+    var isOverall = d.name === 'Overall';
+    var row = document.createElement('div');
+    row.className = 'dim-bar-row';
+    if (isOverall) {
+      row.style.borderTop = '2px solid var(--border)';
+      row.style.marginTop = '8px';
+      row.style.paddingTop = '16px';
+    }
+    row.innerHTML =
+      '<div class="dim-bar-label" style="' + (isOverall ? 'font-weight:700;' : '') + '">' + d.name + '</div>' +
+      '<div class="dim-bar-track"><div class="dim-bar-fill ' + level + '" data-width="' + pct + '" style="width: 0%;"></div></div>' +
+      '<div class="dim-bar-score">' + d.score.toFixed(1) + '</div>' +
+      '<div class="dim-bar-assess">' + d.assessment + '</div>';
+    dimContainer.appendChild(row);
+  });
+
+  // ========== COMPARISON BARS ==========
+  var compContainer = document.getElementById('comparisonBars');
+  comparisons.forEach(function(c) {
+    var deltaStr = (c.delta >= 0 ? '+' : '') + c.delta.toFixed(1) + 'pp';
+    var deltaClass = c.delta > 10 ? 'delta-pos' : c.delta < -10 ? 'delta-neg' : 'delta-neutral';
+    var row = document.createElement('div');
+    row.className = 'comparison-row';
+    row.innerHTML =
+      '<div class="comparison-label">' + c.label + '</div>' +
+      '<div class="comparison-bars">' +
+        '<div class="comparison-bar population" data-width="' + (c.pop * 2) + '" style="width: 0%;"></div>' +
+        '<div class="comparison-bar user" data-width="' + (c.user * 2) + '" style="width: 0%;"></div>' +
+      '</div>' +
+      '<div class="comparison-delta ' + deltaClass + '">' + deltaStr + '</div>';
+    compContainer.appendChild(row);
+  });
+
+  // ========== ANIMATIONS ==========
+  function animateGauge() {
+    var arc = document.getElementById('gaugeArc');
+    var circumference = 2 * Math.PI * 80;
+    var offset = circumference * (1 - overallScore / 10);
+    arc.style.strokeDashoffset = offset;
+  }
+
+  function animateBars() {
+    document.querySelectorAll('.dim-bar-fill, .comparison-bar').forEach(function(el) {
+      var w = el.getAttribute('data-width');
+      if (w) el.style.width = w + '%';
+    });
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.animate-in').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  setTimeout(function() {
+    animateGauge();
+    animateBars();
+    document.querySelectorAll('.animate-in').forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }, 300);
+
+})();
+</script>
+</body>
+</html>

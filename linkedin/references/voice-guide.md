@@ -181,6 +181,19 @@ Use warm, energetic language for the "result" moment instead of clinical descrip
 "CC4M" is acceptable shorthand for "Claude Code for Marketers" in CTAs.
 - **Example:** "For more info on how I use this technique, check out the latest CC4M post:"
 
+### Conversational Over Structured (Blog Promo Posts)
+When promoting a blog post, don't force the Quick Hack or Process Mini-Guide blueprints. Write like you're telling a friend about something you just set up. State the friction casually in one line, show the steps if they're interesting, add caveats as natural asides (not formal sections), and point to the post. The numbered steps can be the star without needing a before/after contrast wrapper around them.
+- **Avoid:** Walking through every step of the old workflow, then every step of the new one, then a formal "here's what changed" payoff
+- **Prefer:** "I was spending so much time copy-pasting between X and Y. [Tool] makes this a 3-step loop instead: [steps]. Fair warning: [caveat]. Full walkthrough here: [link]"
+
+### Asides Over Sections
+Caveats, tangential observations, and alternative tools should read like conversational asides, not structured subsections. Use phrases like "Fair warning:", "Maybe a skill issue on my part", or parenthetical notes. Keep them in the flow of the post rather than breaking them out.
+
+### Conditional CTAs
+Address the reader's situation directly rather than issuing a generic "check this out." Frame it as: "If you [specific situation], you're going to want to [action]."
+- **Avoid:** "Full post is here:"
+- **Prefer:** "If you or your team works in GDocs, you're going to want to take a look at the full walkthrough here:"
+
 ### Don't Rush to Judgment
 Let observations land naturally instead of rushing to a verdict. Softer pacing feels more honest.
 - **Avoid:** "the cracks showed fast"
