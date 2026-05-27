@@ -27,7 +27,7 @@ Write like a curious practitioner sharing live findings: immediate, specific, an
 4. Draft the tweet following the voice guide in `references/voice-guide.md`
 5. Run through preflight/postflight checklists
 6. Present draft to user for approval
-7. If approved, write to temp file and schedule via Typefully
+7. If approved, write to temp file and either schedule or save as draft via Typefully
 
 ## Tools
 
@@ -58,6 +58,9 @@ Get your API key from Typefully Settings > API & Integrations. To find your soci
 ```bash
 # Check what's already scheduled (do this first to avoid conflicts)
 python3 scripts/typefully_scheduler.py --list-scheduled
+
+# Save as draft (no scheduling, just sends to Typefully drafts)
+python3 scripts/typefully_scheduler.py --file /tmp/tweet.txt --draft
 
 # Schedule a tweet from a file
 python3 scripts/typefully_scheduler.py --file /tmp/tweet.txt --schedule next-free-slot

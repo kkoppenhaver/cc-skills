@@ -99,30 +99,34 @@ class TypefullyScheduler:
     def schedule_tweet(
         self,
         text: str,
-        publish_at: str = "next-free-slot",
-        share: bool = False
+        publish_at: Optional[str] = "next-free-slot",
+        share: bool = False,
+        platform: str = "x"
     ) -> ScheduleResult:
         """
-        Schedule a tweet via Typefully.
+        Schedule a tweet via Typefully, or save as draft.
 
         Args:
             text: The tweet text
-            publish_at: When to publish - "now", "next-free-slot", or ISO 8601 datetime
+            publish_at: When to publish - "now", "next-free-slot", ISO 8601 datetime, or None for draft only
             share: Whether to generate a public share URL
+            platform: Target platform - "x", "linkedin", or "both"
 
         Returns:
             ScheduleResult with draft details or error
         """
+        platforms = {}
+        if platform in ("x", "both"):
+            platforms["x"] = {"enabled": True, "posts": [{"text": text}]}
+        if platform in ("linkedin", "both"):
+            platforms["linkedin"] = {"enabled": True, "posts": [{"text": text}]}
+
         data = {
-            "platforms": {
-                "x": {
-                    "enabled": True,
-                    "posts": [{"text": text}]
-                }
-            },
-            "publish_at": publish_at,
+            "platforms": platforms,
             "share": share
         }
+        if publish_at is not None:
+            data["publish_at"] = publish_at
 
         try:
             response = self._make_request(
@@ -144,15 +148,15 @@ class TypefullyScheduler:
     def schedule_thread(
         self,
         posts: List[str],
-        publish_at: str = "next-free-slot",
+        publish_at: Optional[str] = "next-free-slot",
         share: bool = False
     ) -> ScheduleResult:
         """
-        Schedule a thread via Typefully.
+        Schedule a thread via Typefully, or save as draft.
 
         Args:
             posts: List of tweet texts (each becomes a post in the thread)
-            publish_at: When to publish - "now", "next-free-slot", or ISO 8601 datetime
+            publish_at: When to publish - "now", "next-free-slot", ISO 8601 datetime, or None for draft only
             share: Whether to generate a public share URL
 
         Returns:
@@ -165,9 +169,10 @@ class TypefullyScheduler:
                     "posts": [{"text": text} for text in posts]
                 }
             },
-            "publish_at": publish_at,
             "share": share
         }
+        if publish_at is not None:
+            data["publish_at"] = publish_at
 
         try:
             response = self._make_request(
@@ -192,7 +197,10 @@ def format_result(result: ScheduleResult) -> str:
     lines = []
 
     if result.success:
-        lines.append("Tweet scheduled successfully")
+        if result.status == "draft":
+            lines.append("Tweet saved as draft in Typefully")
+        else:
+            lines.append("Tweet scheduled successfully")
         if result.draft_id:
             lines.append(f"   Draft ID: {result.draft_id}")
         if result.status:
@@ -292,6 +300,10 @@ Examples:
     parser.add_argument("--file", "-f", help="Path to file containing tweet text")
     parser.add_argument("--schedule", "-s", default="next-free-slot",
                         help="When to publish: 'now', 'next-free-slot', or ISO 8601 datetime")
+    parser.add_argument("--draft", action="store_true",
+                        help="Save as draft without scheduling (overrides --schedule)")
+    parser.add_argument("--platform", "-p", default="x", choices=["x", "linkedin", "both"],
+                        help="Target platform: 'x', 'linkedin', or 'both' (default: x)")
     parser.add_argument("--share", action="store_true", help="Generate a public share URL")
     parser.add_argument("--list-scheduled", action="store_true", help="List currently scheduled posts")
     parser.add_argument("--list-social-sets", action="store_true", help="List available social sets")
@@ -363,13 +375,17 @@ Examples:
     except Exception:
         pass  # Non-fatal, continue with scheduling
 
-    # Schedule the tweet
-    print(f"Scheduling tweet...")
-    print(f"  Schedule: {args.schedule}")
+    # Schedule or draft the tweet
+    publish_at = None if args.draft else args.schedule
+    if args.draft:
+        print(f"Saving tweet as draft...")
+    else:
+        print(f"Scheduling tweet...")
+        print(f"  Schedule: {args.schedule}")
     print(f"  Content preview: {text[:50]}{'...' if len(text) > 50 else ''}")
     print()
 
-    result = scheduler.schedule_tweet(text, args.schedule, args.share)
+    result = scheduler.schedule_tweet(text, publish_at, args.share, platform=args.platform)
     print(format_result(result))
 
     if not result.success:
