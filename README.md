@@ -1,105 +1,67 @@
 # Claude Code Skills
 
-A collection of custom skills for [Claude Code](https://github.com/anthropics/claude-code) that extend its capabilities with specialized workflows for content creation, design, and image generation.
+A collection of custom skills for [Claude Code](https://github.com/anthropics/claude-code) that extend its capabilities with specialized workflows for content, marketing, social media, video, images, and design.
+
+Skills are invoked automatically when Claude detects a relevant request, or explicitly via a slash command (e.g. `/tweet`, `/nano-banana`).
 
 ## Skills
 
-### frontend-design
+### Copywriting & Content
 
-Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI aesthetics.
+| Skill | What it does |
+|-------|--------------|
+| **copywriting** | Write, rewrite, or improve marketing copy for any page — homepage, landing, pricing, feature, about, or product pages. Headlines, CTAs, value props, taglines, hero sections. |
+| **copy-editing** | Edit, review, and polish *existing* copy rather than writing from scratch — tighten, proofread, sharpen messaging, fix awkward phrasing. |
+| **content-strategy** | Plan a content strategy — what to write about, topic clusters, content pillars, editorial calendars, blog roadmaps. |
+| **fact-check** | Audit a published article or URL for factual accuracy: extract claims, research each against current sources, and generate an accuracy report. Can apply corrections to local files or via MCP (WordPress, Google Docs). |
 
-**Triggers:** Building web components, pages, applications, dashboards, React components, HTML/CSS layouts, or any web UI styling.
+### Social Media & Voice
 
-**Features:**
-- Bold aesthetic direction with intentional design choices
-- Typography, color, motion, and spatial composition guidance
-- Production-grade, functional code output
+| Skill | What it does |
+|-------|--------------|
+| **tweet** | Write tweets and threads in Keanan's voice — punchy, first-person, mixing playful wonder with pragmatic realism. Includes Typefully scheduling. |
+| **linkedin** | Write LinkedIn posts in Keanan's voice — upbeat, builder-centric, practical how-tos with candid humor. Includes Typefully scheduling. |
+| **social-content** | Create, schedule, or optimize social content across platforms (LinkedIn, X, Instagram, TikTok, Facebook). Content calendars, repurposing, engagement strategy. |
 
-### nano-banana
+### Marketing & Growth
 
-Generate and edit images using the Gemini CLI's nanobanana extension.
+| Skill | What it does |
+|-------|--------------|
+| **marketing-ideas** | Brainstorm marketing, growth, and promotion strategies for a SaaS or software product. A starting point when you're stuck or looking for inspiration. |
+| **cold-email** | Write B2B cold outreach and multi-touch follow-up sequences that get replies — subject lines, openers, body copy, CTAs, personalization. |
+| **lead-magnets** | Plan and optimize lead magnets for email capture — ebooks, checklists, templates, content upgrades, opt-ins. |
+| **free-tool-strategy** | Plan, evaluate, or build a free tool as marketing (engineering as marketing) — calculators, generators, graders, audit tools for lead gen and links. |
+| **kit-broadcast** | Create and schedule email broadcasts in Kit (ConvertKit) for new blog posts on Claude Code for Marketers. |
 
-**Triggers:** Any request to create, generate, draw, design, or edit images, graphics, illustrations, thumbnails, icons, diagrams, or visual content.
+### Video (HyperFrames)
 
-**Commands:**
-- `/generate` - Text-to-image generation
-- `/edit` - Modify existing images
-- `/restore` - Repair damaged photos
-- `/icon` - App icons and UI elements
-- `/diagram` - Flowcharts and architecture diagrams
-- `/pattern` - Seamless textures and patterns
+| Skill | What it does |
+|-------|--------------|
+| **hyperframes** | Author HTML-based video compositions — animations, title cards, overlays, captions/subtitles, voiceovers, audio-reactive visuals, and scene transitions. |
+| **hyperframes-cli** | Use the HyperFrames CLI — init, lint, preview, render, transcribe, tts, doctor, and more. |
+| **hyperframes-registry** | Install and wire registry blocks and components into HyperFrames compositions (`hyperframes add`). |
+| **website-to-hyperframes** | Capture a website from a URL and turn it into a HyperFrames video — social ads, product tours, promos. |
+| **gsap** | GSAP animation reference for HyperFrames — tweens, easing, stagger, timelines, and performance patterns. |
+| **youtube-producer** | Turn vague video ideas into developed YouTube concepts — viral titles, hooks, outlines, and promotional shorts. Uses Mark Rober and Aaron Francis frameworks. |
 
-**Requirements:** Gemini CLI with nanobanana extension installed, `GEMINI_API_KEY` environment variable set.
+### Images & Design
 
-### linkedin
+| Skill | What it does |
+|-------|--------------|
+| **nano-banana** | Generate and edit images using Nano Banana (Gemini CLI) — featured images, thumbnails, icons, diagrams, patterns, illustrations, photos. Required for all image generation. |
+| **featured-image** | Generate branded blog/social featured images by authoring an HTML card and rendering it to PNG with headless Chromium ("HTML first, then to PNG"). |
+| **frontend-design** | Build distinctive, production-grade frontend interfaces — components, pages, dashboards, layouts — that avoid generic AI aesthetics. |
 
-Write LinkedIn posts in an upbeat, builder-centric voice mixing practical how-tos with candid humor.
+### Meta & Utility
 
-**Triggers:** Drafting LinkedIn content, creating professional posts, or sharing builder-focused insights.
-
-**Features:**
-- Quick Hack/Tip and Process Mini-Guide structures
-- Before/after contrast framing
-- Preflight and postflight quality checklists
-- Post scheduling via Typefully API
-
-**Scripts:**
-- `scripts/typefully_scheduler.py` - Schedule LinkedIn posts via Typefully
-
-**Requirements:** See [Configuration](#configuration) for Typefully setup.
-
-### tweet
-
-Write tweets in a distinctive voice mixing playful wonder with pragmatic realism.
-
-**Triggers:** Drafting tweets, creating Twitter threads, or crafting X/Twitter content.
-
-**Features:**
-- Voice calibration using existing tweets
-- Micro Discovery and Contrast Hack post structures
-- Preflight and postflight quality checklists
-- Tweet scheduling via Typefully API
-
-**Scripts:**
-- `scripts/typefully_scheduler.py` - Schedule tweets via Typefully
-
-**Requirements:** `bird` CLI for research/voice calibration. See [Configuration](#configuration) for Typefully setup.
-
-### youtube-producer
-
-Transform vague video ideas into fully developed YouTube content with viral titles, compelling hooks, structured outlines, and promotional shorts.
-
-**Triggers:** Brainstorming video ideas, developing concepts, creating titles/thumbnails, writing scripts, or planning shorts.
-
-**Features:**
-- Mark Rober's "Hiding the Vegetables" framework
-- Aaron Francis's "Nugget + Packaging" approach
-- 30-second hook structure templates
-- Three-act video structure guidance
-- YouTube Shorts extraction
-- Title generation with proven formulas
-- Thumbnail design principles
-
-**Scripts:**
-- `scripts/title_generator.py` - Generate titles with scoring
-- `scripts/hook_analyzer.py` - Evaluate hook effectiveness
-- `scripts/shorts_extractor.py` - Extract shorts from outlines
+| Skill | What it does |
+|-------|--------------|
+| **skill-creator** | Guidance for creating and updating skills — structure, SKILL.md authoring, and best practices. |
+| **ai-fluency** | Analyze past Claude Code conversations to measure AI fluency against Anthropic's 4D framework (Delegation, Description, Discernment, Diligence). |
 
 ## Installation
 
-Skills in this directory are automatically available to Claude Code. Place each skill in its own subdirectory with a `SKILL.md` file defining the skill's name, description, and instructions.
-
-## Usage
-
-Skills are invoked automatically when Claude Code detects relevant requests, or explicitly via slash commands:
-
-```
-/frontend-design
-/linkedin
-/nano-banana
-/tweet
-/youtube-producer
-```
+Skills in this directory are automatically available to Claude Code. Each skill lives in its own subdirectory with a `SKILL.md` file defining its name, description, and instructions. Several skills here are symlinks into a shared `.agents/skills` library.
 
 ## Configuration
 
@@ -115,17 +77,17 @@ Some skills require API keys or credentials. Add these to your Claude Code setti
 }
 ```
 
-### Getting Credentials
+| Variable | Used by | Where to get it |
+|----------|---------|-----------------|
+| `GEMINI_API_KEY` | nano-banana | [Google AI Studio](https://aistudio.google.com/apikey) |
+| `TYPEFULLY_API_KEY` | tweet, linkedin | Typefully → Settings → API & Integrations |
+| `TYPEFULLY_SOCIAL_SET_ID` | tweet, linkedin | `python tweet/scripts/typefully_scheduler.py --list-social-sets` |
+| `KIT_API_KEY` | kit-broadcast | Kit (ConvertKit) → Settings → Advanced → API |
 
-**Gemini API Key** (nano-banana):
-- Get from [Google AI Studio](https://aistudio.google.com/apikey)
-
-**Typefully API Key** (tweet/LinkedIn scheduling):
-- Get from Typefully Settings > API & Integrations
-
-**Typefully Social Set ID** (tweet/LinkedIn scheduling):
-- Run `python ~/.claude/skills/tweet/scripts/typefully_scheduler.py --list-social-sets` to find your ID
-- Run `python ~/.claude/skills/tweet/scripts/typefully_scheduler.py --details` to see connected platforms
+**Other requirements:**
+- **tweet** — `bird` CLI for research and voice calibration
+- **featured-image** / **fact-check** — headless Chromium / web access for rendering and research
+- **hyperframes** — the HyperFrames CLI (see the `hyperframes-cli` skill)
 
 ## License
 
